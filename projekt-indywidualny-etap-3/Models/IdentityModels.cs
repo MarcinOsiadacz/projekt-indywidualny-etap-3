@@ -25,6 +25,11 @@ namespace projekt_indywidualny_etap_3.Models
         {
         }
 
+        // Public DbSets
+        public DbSet<EventCategoryModel> Categories { get; set; }
+        public DbSet<EventTypeModel> Types { get; set; }
+        public DbSet<EventModel> Events { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
