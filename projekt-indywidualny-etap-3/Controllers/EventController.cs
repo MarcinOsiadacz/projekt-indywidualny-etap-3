@@ -1,6 +1,7 @@
 ﻿using projekt_indywidualny_etap_3.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,16 +11,31 @@ namespace projekt_indywidualny_etap_3.Controllers
     public class EventController : Controller
     {
         // GET: Event
-        public ActionResult Index()
+        public ViewResult Index(string searchString, string eventTypeFilter, string locationFilter, DateTime? dateFilter)
         {
             using (var context = ApplicationDbContext.Create())
             {
+                ViewBag.EventCategoriesList = context.Categories.ToList();
+                ViewBag.LocationsList = context.Events.Select(e => e.Location).Distinct().ToList();
+
                 var @events = context.Events
                                 .Include("EventType")
                                 .Include("EventCategory")
-                                .ToList();
+                                .AsQueryable();
 
-                return View(@events);
+                if (!string.IsNullOrEmpty(searchString))
+                    @events = @events.Where(e => e.Title.Contains(searchString));
+
+                if (!string.IsNullOrEmpty(eventTypeFilter))
+                    @events = @events.Where(e => e.EventType.Name == eventTypeFilter);
+
+                if (!string.IsNullOrEmpty(locationFilter))
+                    @events = @events.Where(e => e.Location == locationFilter);
+
+                if (dateFilter != null)
+                    @events = @events.Where(e => DbFunctions.TruncateTime(e.StartTime) == DbFunctions.TruncateTime(dateFilter));
+                    
+                return View(@events.ToList());
             }
         }
 
