@@ -11,7 +11,7 @@ namespace projekt_indywidualny_etap_3.Controllers
     public class EventController : Controller
     {
         // GET: Event
-        public ViewResult Index(string searchString, string eventTypeFilter, string locationFilter, DateTime? dateFilter)
+        public ViewResult Index(string searchString, string eventCategoryFilter, string locationFilter, DateTime? dateFilter)
         {
             using (var context = ApplicationDbContext.Create())
             {
@@ -26,8 +26,8 @@ namespace projekt_indywidualny_etap_3.Controllers
                 if (!string.IsNullOrEmpty(searchString))
                     @events = @events.Where(e => e.Title.Contains(searchString));
 
-                if (!string.IsNullOrEmpty(eventTypeFilter))
-                    @events = @events.Where(e => e.EventType.Name == eventTypeFilter);
+                if (!string.IsNullOrEmpty(eventCategoryFilter))
+                    @events = @events.Where(e => e.EventCategory.Name == eventCategoryFilter);
 
                 if (!string.IsNullOrEmpty(locationFilter))
                     @events = @events.Where(e => e.Location == locationFilter);
