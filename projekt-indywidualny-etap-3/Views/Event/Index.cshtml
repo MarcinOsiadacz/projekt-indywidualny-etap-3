@@ -7,6 +7,7 @@
 <h2>Events Search</h2>
 @using (Html.BeginForm())
 {
+<div class="events-search-container jumbotron">
     <!-- Search Box -->
     <div class="form-group">
         <label for="SearchString">Title</label>
@@ -36,20 +37,22 @@
         <label for="dateFilter">Date</label>
         <input name="dateFilter" id="dateFilter" type="date" class="form-control" />
         <!-- Submit -->
-        <input type="submit" value="Search" class="btn btn-primary" />
+        <input type="submit" value="Search" class="btn btn-events" />
     </div>
+</div>
 }
+<br />
 <!-- Events found -->
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-xs-6 col-lg-4">
+    <div class="col-xs-6 col-lg-4">
             <strong class="event-category-text">@Html.DisplayFor(modelItem => item.EventCategory.Name)</strong>
             <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
             <div class="mb-1 text-muted">@item.StartTime.ToShortDateString(), @Html.DisplayFor(modelItem => item.Location)</div>
-            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+            <p>@(item.Description.Length > 255 ? item.Description.Substring(0, 255) + ".." : item.Description)</p>
             <p>@Html.ActionLink("Details", "Details", new { id = item.Id })</p>
-        </div>
+    </div>
     }
 </div>
 

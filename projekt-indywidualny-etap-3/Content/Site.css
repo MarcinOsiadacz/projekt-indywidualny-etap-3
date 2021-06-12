@@ -1,11 +1,19 @@
 ﻿/* Custom CSS */
 
+.events-search-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
 .img-detail-page {
     width: 100%;
 }
 
 .event-category-text {
-    color: #9932CC;
+    color: #2b6d46;
 }
 
 .btn-events {
@@ -36,7 +44,6 @@
 }
 
 .event-details-item {
-    margin: 3px;
     align-self: center;
 }
 
